@@ -1,3 +1,38 @@
+-------------------------------------------------------------------------------
+Rhomb specific instructions
+-------------------------------------------------------------------------------
+To build and use the buildroot stuff, do the following:
+
+1) Run below command
+   # sudo ./build.sh all
+   This command will take little long for the first time run as it downloads
+   all the packages and then compile. It will generated zImage (dtb appended )
+   and rootfs.tar in "<buidroot_rhomb>/output/images/".
+
+2) To rebuild linux kernel.
+   # sudo ./build.sh linux
+   This command rebuild linux kernel with latest chagnes and install kernel
+   image (zImage with dtb appended) in "<buidroot_rhomb>/output/images/".
+
+3) To get help of the 'build.sh' script
+   # sudo ./build.sh help
+
+4) There is one more script 'prepare_sd.sh'. Using this script user can flash
+   geneated 'zImage' and 'rootfs.tar' in sd card.
+   run 'prepare_sd.sh' script:
+   # sudo ./prepare_sd.sh
+
+   Use below 'bootcmd' at u-boot prompt to boot from sd card:
+   setenv bootcmd 'ext4load mmc 1:1 0x40008000 zImage;bootm 0x40008000'
+   saveenv
+
+   Use below 'bootargs' to boot filesystem from sd card :
+   setenv bootargs 'console=tty1 console=ttySAC1,115200 mem=1023M root=/dev/mmcblk0p1 rootwait rw'
+   saveenv
+
+-------------------------------------------------------------------------------
+Generic instructions
+-------------------------------------------------------------------------------
 Buildroot is a simple, efficient and easy-to-use tool to generate embedded
 Linux systems through cross-compilation.
 

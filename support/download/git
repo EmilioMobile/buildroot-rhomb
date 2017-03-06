@@ -46,14 +46,14 @@ _git() {
 # Messages for the type of clone used are provided to ease debugging in case of
 # problems
 git_done=0
-if [ -n "$(_git ls-remote "'${repo}'" "'${cset}'" 2>&1)" ]; then
-    printf "Doing shallow clone\n"
-    if _git clone ${verbose} "${@}" --depth 1 -b "'${cset}'" "'${repo}'" "'${basename}'"; then
-        git_done=1
-    else
-        printf "Shallow clone failed, falling back to doing a full clone\n"
-    fi
-fi
+#if [ -n "$(_git ls-remote "'${repo}'" "'${cset}'" 2>&1)" ]; then
+#    printf "Doing shallow clone\n"
+#    if _git clone ${verbose} "${@}" --depth 1 -b "'${cset}'" "'${repo}'" "'${basename}'"; then
+#        git_done=1
+#    else
+#        printf "Shallow clone failed, falling back to doing a full clone\n"
+#    fi
+#fi
 if [ ${git_done} -eq 0 ]; then
     printf "Doing full clone\n"
     _git clone ${verbose} "${@}" "'${repo}'" "'${basename}'"
@@ -87,7 +87,7 @@ fi
 
 # We do not need the .git dir; we keep other .git files, in case they
 # are the only files in their directory.
-rm -rf .git
+#rm -rf .git
 
 popd >/dev/null
 
