@@ -14,16 +14,25 @@ To build and use the buildroot stuff, do the following:
    This command rebuild linux kernel with latest chagnes and install kernel
    image (zImage with dtb appended) in "<buidroot_rhomb>/output/images/".
 
-3) To get help of the 'build.sh' script
+3) To rebuild u-boot 
+   # sudo ./build.sh uboot
+   This command rebuild uboot with latest chagnes and install uboot image 
+    in "<buidroot_rhomb>/output/images/".
+
+4) To build rootfs.tar
+   # sudo ./build.sh rootfs
+
+5) To get help of the 'build.sh' script
    # sudo ./build.sh help
 
-4) There is one more script 'prepare_sd.sh'. Using this script user can flash
+6) There is one more script 'prepare_sd.sh'. Using this script user can flash
    geneated 'zImage' and 'rootfs.tar' in sd card.
    run 'prepare_sd.sh' script:
-   # sudo ./prepare_sd.sh
+   # sudo ./prepare_sd.sh <SD Reader's device file>
+   example <SD Reader's device file> : sdb, mmcblk0, sdd, sdc etc
 
    Use below 'bootcmd' at u-boot prompt to boot from sd card:
-   setenv bootcmd 'ext4load mmc 1:1 0x40008000 zImage;bootm 0x40008000'
+   setenv bootcmd 'ext4load mmc 0:1 0x40008000 zImage;bootm 0x40008000'
    saveenv
 
    Use below 'bootargs' to boot filesystem from sd card :
