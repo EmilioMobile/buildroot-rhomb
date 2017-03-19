@@ -1,6 +1,9 @@
 #!/bin/bash
 # This is generic build script we generated for our use case.
 arg="$1"
+ROOT_DIR=$PWD
+UBOOT_DIR=$ROOT_DIR/output/build/uboot-odroid-v2015.10
+KERNEL_DIR=$ROOT_DIR/output/build/linux-odroid-4.8.y
 
 function print_help () {
 	echo "####################################################"
@@ -28,19 +31,29 @@ function print_help () {
 }
 
 function linux_build () {
-	cd output/build/linux-odroid-4.8.y
-	sudo git pull
-	cd -
-	sudo make linux-rebuild
-	sudo make linux-install
+	if [ -d $KERNEL_DIR ];
+	then
+		cd output/build/linux-odroid-4.8.y
+		sudo git pull
+		cd -
+		sudo make linux-rebuild
+		sudo make linux-install
+	else
+		sudo make
+	fi
 }
 
 function uboot_build () {
-	cd output/build/uboot-odroid-v2015.10
-	sudo git pull
-	cd -
-	sudo make uboot-rebuild
-	sudo make uboot-install
+	if [ -d $UBOOT_DIR ];
+	then
+		cd $UBOOT_DIR
+		sudo git pull
+		cd -
+		sudo make uboot-rebuild
+		sudo make uboot-install
+	else
+		sudo make
+	fi
 }
 
 function apply_buildroot_defconfig () {
