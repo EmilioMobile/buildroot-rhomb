@@ -67,10 +67,6 @@ fi
 
 if [ -b "/dev/$11" ]; then
 	flash_kernel_rootfs $1
-	echo "SD card prepared"
-	echo "Insert sd card into board and set board in SD card bootmode"
-	echo "Power on board"
-	echo "Good luck!"
 else
 	echo "partition not found!"
 	if [ -b "/dev/$1" ]; then
@@ -84,6 +80,10 @@ fi
 if [ -b "/dev/$1" ]; then
 	flash_bootloder $1
 	cd $ROOTDIR
+	echo "SD card prepared"
+	echo "Insert sd card into board and set board in SD card bootmode"
+	echo "Power on board"
+	echo "Good luck!"
 else
 	device_not_found_error
 	exit 0

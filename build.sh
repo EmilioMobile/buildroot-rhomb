@@ -30,6 +30,10 @@ function print_help () {
 	echo "####################################################"
 }
 
+function apply_buildroot_defconfig () {
+	sudo make rhomb_defconfig
+}
+
 function linux_build () {
 	if [ -d $KERNEL_DIR ];
 	then
@@ -39,7 +43,9 @@ function linux_build () {
 		sudo make linux-rebuild
 		sudo make linux-install
 	else
-		sudo make
+		apply_buildroot_defconfig
+		sudo make linux-rebuild
+		sudo make linux-install
 	fi
 }
 
@@ -52,12 +58,10 @@ function uboot_build () {
 		sudo make uboot-rebuild
 		sudo make uboot-install
 	else
-		sudo make
+		apply_buildroot_defconfig
+		sudo make uboot-rebuild
+		sudo make uboot-install
 	fi
-}
-
-function apply_buildroot_defconfig () {
-	sudo make rhomb_defconfig
 }
 
 function rootfs_build () {

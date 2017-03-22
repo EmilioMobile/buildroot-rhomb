@@ -30,14 +30,33 @@ To build and use the buildroot stuff, do the following:
    run 'prepare_sd.sh' script:
    # sudo ./prepare_sd.sh <SD Reader's device file>
    example <SD Reader's device file> : sdb, mmcblk0, sdd, sdc etc
+   Once SD card is prepared user need to set board for SD bootmode.
+   Insert prepared SD card and power on board.
+   Now onwards setting bootargs and bootcmd are taken care in u-boot itself.
 
-   Use below 'bootcmd' at u-boot prompt to boot from sd card:
-   setenv bootcmd 'ext4load mmc 0:1 0x40008000 zImage;bootm 0x40008000'
-   saveenv
+7) For EMMC flashing user need to first follow steps 1-6. Once board is booted
+   from SD card user need to login. "buildroot login: " prompt by entering
+   "root".
+8) After that apply below commands.
+   # cd /opt/
+   # tar -xf images.tar
+   # ./emmc_fusing.sh mmcblk1
+        (This script will ask user if "/dev/mmcblk1p1" already formated with ext4
+        filesystem as below)
 
-   Use below 'bootargs' to boot filesystem from sd card :
-   setenv bootargs 'console=tty1 console=ttySAC1,115200 mem=1023M root=/dev/mmcblk0p1 rootwait rw'
-   saveenv
+        /dev/mmcblk1p1 contains a ext4 file system
+                last mounted on / on Thu Jan  1 00:00:02 1970
+        Proceed anyway? (y,N)
+        Enter 'y' if it asked first time.
+        For next time onwards user can enter 'N'
+9) At the end of above command below messages will be printed
+        eMMC flashed
+        Power off the board
+        Set emmc boot mode boot board
+        Good luck!
+10) User need to set board in EMMC bootmode to boot board from EMMC.
+11) Once user set board in EMMC bootmode and power on board board will boot from
+    EMMC. Here setting bootcmd, bootargs are taken by "emmc_fusing.sh" script.
 
 -------------------------------------------------------------------------------
 Generic instructions
