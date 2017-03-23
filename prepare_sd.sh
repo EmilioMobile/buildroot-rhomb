@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 ROOTDIR=$PWD
 UBOOTDIR=$ROOTDIR/output/build/uboot-odroid-v2015.10
 function device_not_found_error () {
