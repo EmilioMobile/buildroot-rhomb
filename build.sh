@@ -1,9 +1,8 @@
 #!/bin/bash
 # This is generic build script we generated for our use case.
+. setup_env
+
 arg="$1"
-ROOT_DIR=$PWD
-UBOOT_DIR=$ROOT_DIR/output/build/uboot-odroid-v2015.10
-KERNEL_DIR=$ROOT_DIR/output/build/linux-odroid-4.8.y
 
 function print_help () {
 	echo "####################################################"

@@ -1,16 +1,16 @@
 #!/bin/bash
-ROOTDIR=$PWD
-UBOOTDIR=$ROOTDIR/output/build/uboot-odroid-v2015.10
+. setup_env
+
 function device_not_found_error () {
 	echo "Given device not found!"
 	echo "please check dmesg for verification"
 }
 
 function copy_bootloader_binaries () {
-	cp $UBOOTDIR/sd_fuse/bl1.HardKernel $ROOTDIR/output/images/
-	cp $UBOOTDIR/sd_fuse/bl2.HardKernel $ROOTDIR/output/images/
-	cp $UBOOTDIR/sd_fuse/tzsw.HardKernel $ROOTDIR/output/images/
-	cp $UBOOTDIR/sd_fuse/sd_fusing.sh $ROOTDIR/output/images/
+	cp $UBOOT_DIR/sd_fuse/bl1.HardKernel $IMAGES_DIR
+	cp $UBOOT_DIR/sd_fuse/bl2.HardKernel $IMAGES_DIR
+	cp $UBOOT_DIR/sd_fuse/tzsw.HardKernel $IMAGES_DIR
+	cp $UBOOT_DIR/sd_fuse/sd_fusing.sh $IMAGES_DIR
 }
 
 function create_partition () {
@@ -26,13 +26,13 @@ END
 }
 
 function flash_bootloder () {
-	cd $ROOTDIR/output/images
+	cd $IMAGES_DIR
 	sudo ./sd_fusing.sh /dev/$1
 	sync
 }
 
 function copy_emmc_flashing_files () {
-	cd $ROOTDIR/output
+	cd $OUTPUT_DIR
 	tar -cvf images.tar images
 	sudo cp images.tar /mnt/tmp/opt/
 }
@@ -43,14 +43,14 @@ function flash_kernel_rootfs () {
 	sudo mkfs.ext4 /dev/$11
 	sudo mkdir -p /mnt/tmp
 	sudo mount /dev/$11 /mnt/tmp
-	sudo tar -xf $ROOTDIR/output/images/rootfs.tar -C /mnt/tmp/
-	sudo cp $ROOTDIR/output/images/zImage.exynos4412-rhomb-expansion /mnt/tmp/zImage
-	sudo cp $ROOTDIR/utils/fw_setenv /mnt/tmp/usr/bin/
-	sudo cp $ROOTDIR/utils/fw_printenv /mnt/tmp/usr/bin/
-	sudo cp $UBOOTDIR/tools/env/fw_env.config /mnt/tmp/etc/
-	sudo cp emmc_fusing.sh $ROOTDIR/output/images
+	sudo tar -xf $IMAGES_DIR/rootfs.tar -C /mnt/tmp/
+	sudo cp $IMAGES_DIR/zImage.exynos4412-rhomb-expansion /mnt/tmp/zImage
+	sudo cp $ROOT_DIR/utils/fw_setenv /mnt/tmp/usr/bin/
+	sudo cp $ROOT_DIR/utils/fw_printenv /mnt/tmp/usr/bin/
+	sudo cp $UBOOT_DIR/tools/env/fw_env.config /mnt/tmp/etc/
+	sudo cp emmc_fusing.sh $IMAGES_DIR
 	copy_emmc_flashing_files
-	cd $ROOTDIR
+	cd $ROOT_DIR
 	sync
 	sudo umount /dev/$11
 	sync
@@ -79,7 +79,7 @@ fi
 
 if [ -b "/dev/$1" ]; then
 	flash_bootloder $1
-	cd $ROOTDIR
+	cd $ROOT_DIR
 	echo "SD card prepared"
 	echo "Insert sd card into board and set board in SD card bootmode"
 	echo "Power on board"

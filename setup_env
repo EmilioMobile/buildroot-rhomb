@@ -1,0 +1,5 @@
+ROOT_DIR=$PWD
+OUTPUT_DIR=$ROOT_DIR/output
+IMAGES_DIR=$OUTPUT_DIR/images
+UBOOT_DIR=$OUTPUT_DIR/build/uboot-odroid-v2015.10
+KERNEL_DIR=$OUTPUT_DIR/build/linux-odroid-4.8.y
