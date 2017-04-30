@@ -1,0 +1,6 @@
+config BR2_PACKAGE_HW_TESTS
+	bool "hw_tests"
+	depends on BR2_LINUX_KERNEL
+	help
+	    HW tests for rhomb devices
+	    Needs kernel to be build

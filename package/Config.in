@@ -1823,4 +1823,8 @@ menu "Text editors and viewers"
 	source "package/vim/Config.in"
 endmenu
 
+menu "Rhomb specific"
+        source "package/hw_tests/Config.in"
+endmenu
+
 endmenu

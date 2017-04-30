@@ -64,6 +64,8 @@ function uboot_build () {
 }
 
 function rootfs_build () {
+	sudo make hw_tests-dirclean
+	sudo make hw_tests
 	apply_buildroot_defconfig
 	sudo make
 }
