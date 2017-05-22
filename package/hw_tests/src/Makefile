@@ -1,4 +1,4 @@
-SUBDIRS = gpio
+SUBDIRS = gpio devmem
 
 all:
 	for d in $(SUBDIRS); do \
